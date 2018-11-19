@@ -1,8 +1,99 @@
 import 'package:flutter/material.dart';
+import 'package:demo/Planet.dart';
+
+// 基础样式
+final baseTextStyle = const TextStyle(fontFamily: 'Poppins');
+// 标题样式，基于基础样式
+final headerTextStyle = baseTextStyle.copyWith(
+    color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.w600);
+// 内容样式，基于基础样式
+final regularTextStyle = baseTextStyle.copyWith(
+    color: const Color(0xffb6b2df), fontSize: 9.0, fontWeight: FontWeight.w400);
+// 副标题样式，基于内容样式
+final subHeaderTextStyle = regularTextStyle.copyWith(fontSize: 12.0);
 
 class PlanetRow extends StatelessWidget {
+  final Planet planet;
+
+  PlanetRow(this.planet);
+
+  // ① 下划线代表私有方法
+  // ② 生成图标、数值的部件
+  Widget _planetValue({String value, String image}) {
+    return new Row(
+      children: <Widget>[
+        // 图标
+        new Image.asset(
+          image,
+          height: 12.0,
+        ),
+        // 间距8.0
+        new Container(
+          width: 8.0,
+        ),
+        // 数值
+        new Text(
+          value,
+          style: regularTextStyle,
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final planetCardContent = new Container(
+      margin: new EdgeInsets.fromLTRB(76.0, 16.0, 16.0, 16.0),
+      // 铺满
+      constraints: new BoxConstraints.expand(),
+      child: new Column(
+        // 水平方向，自视图左对齐
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          // 间距4.0
+          new Container(
+            height: 4.0,
+          ),
+          // 行星名称
+          new Text(
+            planet.name,
+            style: headerTextStyle,
+          ),
+          // 间距10.0
+          new Container(
+            height: 10.0,
+          ),
+          // 行星位置
+          new Text(
+            planet.location,
+            style: subHeaderTextStyle,
+          ),
+          // 横岗
+          new Container(
+            // 上下间距8.0
+            margin: new EdgeInsets.symmetric(vertical: 8.0),
+            height: 2.0,
+            width: 18.0,
+            color: new Color(0xff00c6ff),
+          ),
+          // 距离和重力
+          new Row(
+            // Expanded Widget：Row/Column/Flex子控件铺满主轴方向
+            children: <Widget>[
+              new Expanded(
+                  child: _planetValue(
+                      value: planet.distance,
+                      image: 'assets/img/ic_distance.png')),
+              new Expanded(
+                  child: _planetValue(
+                      value: planet.gravity,
+                      image: 'assets/img/ic_gravity.png'))
+            ],
+          )
+        ],
+      ),
+    );
+
     final planetThumbnail = new Container(
       // 上下向内偏移16.0
       margin: new EdgeInsets.symmetric(vertical: 16.0),
@@ -10,7 +101,7 @@ class PlanetRow extends StatelessWidget {
       alignment: FractionalOffset.centerLeft,
       child: new Image(
         // 使用AssetImage Widget加载图片
-        image: new AssetImage("assets/img/mars.png"),
+        image: new AssetImage(planet.image),
         height: 92.0,
         width: 92.0,
       ),
@@ -37,9 +128,11 @@ class PlanetRow extends StatelessWidget {
               offset: new Offset(0.0, 10.0),
             )
           ]),
+      child: planetCardContent,
     );
 
     return new Container(
+      height: 120.0,
       // EdgeInsets.symmetric等同于EdgeInsets.only(top: 16.0, bottom: 16.0, left: 24.0, right: 24.0)
       margin: const EdgeInsets.symmetric(
         // 上下偏移16.0
