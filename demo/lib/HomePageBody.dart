@@ -53,6 +53,23 @@ class HomePageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new PlanetRow(planets[0]);
+    return new Expanded(
+        child: new Container(
+      color: new Color(0xff736ab7),
+      child: new CustomScrollView(
+        scrollDirection: Axis.vertical, // 竖直方向滚动
+        slivers: <Widget>[
+          new SliverPadding(
+            padding: const EdgeInsets.symmetric(vertical: 24.0), // 上下向内偏移24.0px
+            sliver: new SliverFixedExtentList(
+                delegate: new SliverChildBuilderDelegate(
+                  (context, index) => new PlanetRow(planets[index]),
+                  childCount: planets.length,
+                ),
+                itemExtent: 152.0),
+          )
+        ],
+      ),
+    ));
   }
 }
