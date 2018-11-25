@@ -14,7 +14,7 @@ class HomePageBody extends StatelessWidget {
       image: "assets/img/mars.png",
     ),
     const Planet(
-      id: 1,
+      id: 2,
       name: "海王星",
       location: "银河系",
       distance: "54.6m km",
@@ -23,7 +23,7 @@ class HomePageBody extends StatelessWidget {
       image: "assets/img/neptune.png",
     ),
     const Planet(
-      id: 1,
+      id: 3,
       name: "月球",
       location: "银河系",
       distance: "54.6m km",
@@ -32,7 +32,7 @@ class HomePageBody extends StatelessWidget {
       image: "assets/img/moon.png",
     ),
     const Planet(
-      id: 1,
+      id: 4,
       name: "地球",
       location: "银河系",
       distance: "0m km",
@@ -41,7 +41,7 @@ class HomePageBody extends StatelessWidget {
       image: "assets/img/earth.png",
     ),
     const Planet(
-      id: 1,
+      id: 5,
       name: "水星",
       location: "银河系",
       distance: "54.6m km",

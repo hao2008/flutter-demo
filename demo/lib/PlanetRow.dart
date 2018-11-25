@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:demo/Planet.dart';
+import 'package:demo/DetailPage.dart';
 
 // 基础样式
 final baseTextStyle = const TextStyle(fontFamily: 'Poppins');
@@ -95,17 +96,19 @@ class PlanetRow extends StatelessWidget {
     );
 
     final planetThumbnail = new Container(
-      // 上下向内偏移16.0
-      margin: new EdgeInsets.symmetric(vertical: 16.0),
-      // 水平方向靠左边线，垂直方向居中，等价于FractionalOffset(0.0, 0.5);
-      alignment: FractionalOffset.centerLeft,
-      child: new Image(
-        // 使用AssetImage Widget加载图片
-        image: new AssetImage(planet.image),
-        height: 92.0,
-        width: 92.0,
-      ),
-    );
+        // 上下向内偏移16.0
+        margin: new EdgeInsets.symmetric(vertical: 16.0),
+        // 水平方向靠左边线，垂直方向居中，等价于FractionalOffset(0.0, 0.5);
+        alignment: FractionalOffset.centerLeft,
+//        child: new Hero(
+//          tag: "planet-hero-${planet.id}",
+        child: new Image(
+          // 使用AssetImage Widget加载图片
+          image: new AssetImage(planet.image),
+          height: 92.0,
+          width: 92.0,
+//          ),
+        ));
 
     final planetCard = new Container(
       height: 124.0,
@@ -131,18 +134,23 @@ class PlanetRow extends StatelessWidget {
       child: planetCardContent,
     );
 
-    return new Container(
-      height: 120.0,
-      // EdgeInsets.symmetric等同于EdgeInsets.only(top: 16.0, bottom: 16.0, left: 24.0, right: 24.0)
-      margin: const EdgeInsets.symmetric(
-        // 上下偏移16.0
-        vertical: 16.0,
-        // 左右偏移24.0
-        horizontal: 24.0,
-      ),
-      // Stack Widget用于创建上下重叠部件
-      child: new Stack(
-        children: <Widget>[planetCard, planetThumbnail],
+    return new GestureDetector(
+      onTap: () => Navigator.of(context).push(new PageRouteBuilder(
+            pageBuilder: (_, __, ___) => new DetailPage(planet),
+          )),
+      child: new Container(
+        height: 120.0,
+        // EdgeInsets.symmetric等同于EdgeInsets.only(top: 16.0, bottom: 16.0, left: 24.0, right: 24.0)
+        margin: const EdgeInsets.symmetric(
+          // 上下偏移16.0
+          vertical: 16.0,
+          // 左右偏移24.0
+          horizontal: 24.0,
+        ),
+        // Stack Widget用于创建上下重叠部件
+        child: new Stack(
+          children: <Widget>[planetCard, planetThumbnail],
+        ),
       ),
     );
   }
