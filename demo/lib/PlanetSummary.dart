@@ -3,10 +3,12 @@ import 'package:demo/Planet.dart';
 import 'package:demo/DetailPage.dart';
 import 'package:demo/Style.dart';
 
-class PlanetRow extends StatelessWidget {
+class PlanetSummary extends StatelessWidget {
   final Planet planet;
+  final bool horizontal;
 
-  PlanetRow(this.planet);
+  PlanetSummary(this.planet, {this.horizontal = true});
+  PlanetSummary.vertical(this.planet) : horizontal = false;
 
   // ① 下划线代表私有方法
   // ② 生成图标、数值的部件
@@ -34,12 +36,14 @@ class PlanetRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final planetCardContent = new Container(
-      margin: new EdgeInsets.fromLTRB(76.0, 16.0, 16.0, 16.0),
+      margin: new EdgeInsets.fromLTRB(
+          76.0, horizontal ? 16.0 : 42.0, horizontal ? 16.0 : 70.0, 16.0),
       // 铺满
       constraints: new BoxConstraints.expand(),
       child: new Column(
         // 水平方向，自视图左对齐
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment:
+            horizontal ? CrossAxisAlignment.start : CrossAxisAlignment.center,
         children: <Widget>[
           // 间距4.0
           new Container(
@@ -72,10 +76,15 @@ class PlanetRow extends StatelessWidget {
             // Expanded Widget：Row/Column/Flex子控件铺满主轴方向
             children: <Widget>[
               new Expanded(
+                  flex: horizontal ? 0 : 1,
                   child: _planetValue(
                       value: planet.distance,
                       image: 'assets/img/ic_distance.png')),
+              new Container(
+                width: 32.0,
+              ),
               new Expanded(
+                  flex: horizontal ? 0 : 1,
                   child: _planetValue(
                       value: planet.gravity,
                       image: 'assets/img/ic_gravity.png'))
@@ -89,21 +98,25 @@ class PlanetRow extends StatelessWidget {
         // 上下向内偏移16.0
         margin: new EdgeInsets.symmetric(vertical: 16.0),
         // 水平方向靠左边线，垂直方向居中，等价于FractionalOffset(0.0, 0.5);
-        alignment: FractionalOffset.centerLeft,
-//        child: new Hero(
-//          tag: "planet-hero-${planet.id}",
-        child: new Image(
-          // 使用AssetImage Widget加载图片
-          image: new AssetImage(planet.image),
-          height: 92.0,
-          width: 92.0,
-//          ),
+        alignment: horizontal
+            ? FractionalOffset.centerLeft
+            : FractionalOffset.topCenter,
+        child: new Hero(
+          tag: "planet-hero-${planet.id}",
+          child: new Image(
+            // 使用AssetImage Widget加载图片
+            image: new AssetImage(planet.image),
+            height: 92.0,
+            width: 92.0,
+          ),
         ));
 
     final planetCard = new Container(
-      height: 124.0,
+      height: horizontal ? 124.0 : 154.0,
       // 左侧偏移46.0
-      margin: new EdgeInsets.only(left: 46.0),
+      margin: horizontal
+          ? new EdgeInsets.only(left: 46.0)
+          : new EdgeInsets.only(top: 72.0),
       // 设置样式
       decoration: new BoxDecoration(
           color: new Color(0xff333366),
@@ -125,11 +138,13 @@ class PlanetRow extends StatelessWidget {
     );
 
     return new GestureDetector(
-      onTap: () => Navigator.of(context).push(new PageRouteBuilder(
-            pageBuilder: (_, __, ___) => new DetailPage(planet),
-          )),
+      onTap: horizontal
+          ? () => Navigator.of(context).push(new PageRouteBuilder(
+                pageBuilder: (_, __, ___) => new DetailPage(planet),
+              ))
+          : null,
       child: new Container(
-        height: 120.0,
+        height: horizontal ? 120.0 : 254.0,
         // EdgeInsets.symmetric等同于EdgeInsets.only(top: 16.0, bottom: 16.0, left: 24.0, right: 24.0)
         margin: const EdgeInsets.symmetric(
           // 上下偏移16.0
