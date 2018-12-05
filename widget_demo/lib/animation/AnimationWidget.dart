@@ -26,10 +26,10 @@ class AnimationWidget extends StatelessWidget {
           ),
           new Text(
             "颜色动画",
-            style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+            style: new TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
           ),
           new Container(
-            height: 200.0,
+            height: 250.0,
             child: new ColorAnimation(),
           )
         ],

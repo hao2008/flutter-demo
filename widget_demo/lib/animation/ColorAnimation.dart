@@ -20,7 +20,7 @@ class _ColorAnimationState extends State<ColorAnimation>
     super.initState();
 
     _controller = new AnimationController(
-        vsync: this, duration: new Duration(milliseconds: 1000));
+        vsync: this, duration: new Duration(milliseconds: 1500));
     _animation =
         new ColorTween(begin: Colors.blue, end: Colors.red).animate(_controller)
           ..addListener(() {
