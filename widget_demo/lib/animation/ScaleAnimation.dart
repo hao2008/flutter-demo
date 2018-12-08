@@ -12,12 +12,16 @@ class _ScaleAnimationState extends State<ScaleAnimation>
     with SingleTickerProviderStateMixin {
   Animation<double> animation;
   AnimationController controller;
+  CurvedAnimation curvedAnimation;
 
   @override
   void initState() {
     super.initState();
     controller = new AnimationController(
         duration: const Duration(seconds: 1), vsync: this);
+
+    curvedAnimation =
+        new CurvedAnimation(parent: controller, curve: Curves.easeIn);
     animation = new Tween(begin: 100.0, end: 200.0).animate(controller)
       ..addListener(() {
         setState(() {});
